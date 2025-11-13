@@ -231,7 +231,6 @@ def upload_document(case_id):
     user_role = session.get('role')
     access_level = permissions_manager.get_user_access_level(case_id, user_id)
 
-    # Check if user has permission to upload
     if user_role != 'judge' and access_level not in ['sudo', 'upload_only']:
         return jsonify({"error": "You do not have permission to upload to this case"}), 403
 
@@ -270,7 +269,6 @@ def download_document(doc_id):
         return jsonify({"error": "Document not found"}), 404
 
     case_id = document['case_id']
-    # Check if user has access to the case
     if user_role != 'judge' and not permissions_manager.check_access(case_id, user_id):
         return jsonify({"error": "You do not have permission to download this file"}), 403
 
