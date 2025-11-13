@@ -56,6 +56,7 @@ def create_database():
         );
         """
 
+        #-----NOT USING ATM FOR THE SAKE OF SIMPLICITY AND FAST PROTOTYPING-----
         # --- SQL statement for DocumentPermissions table ---
         # INTEGER PRIMARY KEY AUTOINCREMENT is the standard SQLite way for an auto-incrementing ID.
         sql_create_permissions_table = """
