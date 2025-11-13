@@ -16,7 +16,7 @@ const MainLayout = ({ children }) => {
         <div className="main-layout">
             <aside className="sidebar">
                 <div className="sidebar-header">
-                    <h3>Legal_Int</h3>
+                    <h3 className="logo">LegalInt</h3>
                 </div>
                 <nav className="sidebar-nav">
                     <NavLink to="/dashboard">Dashboard</NavLink>

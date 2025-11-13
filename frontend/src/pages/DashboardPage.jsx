@@ -55,7 +55,7 @@ const DashboardPage = () => {
     return (
         <div className="dashboard-container">
             <header className="dashboard-header">
-                <h1>Welcome to Legal_Int, {user.full_name}.</h1>
+                <h1>Dashboard</h1>
                 <p>Welcome back, {user.full_name}.</p>
             </header>
 

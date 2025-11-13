@@ -36,7 +36,7 @@ const LoginPage = () => {
     return (
         <div className="auth-container">
             <div className="auth-form">
-                <h2>Login to Legal_Int</h2>
+                <h2 className="logo">LegalInt</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
                         <label htmlFor="email">Email Address</label>

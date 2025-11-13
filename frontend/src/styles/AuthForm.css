@@ -16,10 +16,19 @@
     text-align: center;
 }
 
-.auth-form h2 {
-    margin-bottom: 2rem;
+.auth-form .logo {
+    font-family: var(--font-family-logo);
+    font-size: 3rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
     color: var(--color-text-primary);
-    font-size: 2rem;
+}
+
+.auth-subheading {
+    margin-top: -1rem;
+    margin-bottom: 2rem;
+    color: var(--color-text-secondary);
 }
 
 .form-group {

@@ -1,2 +1,20 @@
-flask
-bcrypt
+# Core Flask application and utilities
+Flask==2.3.3
+Werkzeug==2.3.7 # Flask's underlying WSGI utility library
+Jinja2==3.1.2 # Flask's templating engine
+itsdangerous==2.1.2 # Flask's session management
+
+# Password hashing
+bcrypt==4.1.1
+
+# Database connector for PostgreSQL (for AWS RDS integration)
+psycopg2-binary==2.9.9
+
+# AWS SDK for Python (for S3 integration)
+boto3==1.34.10
+
+# Production WSGI HTTP Server
+gunicorn==21.2.0
+
+# For local environment variable management (optional, but good practice)
+python-dotenv==1.0.0
