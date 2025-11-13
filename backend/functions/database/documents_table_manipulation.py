@@ -4,6 +4,7 @@ import sqlite3
 import uuid
 import os
 from datetime import datetime
+from backend.DataBase.database_init import create_documents_table
 
 DB_FILE = "justicelink.db"
 
@@ -17,8 +18,18 @@ def add_document_record(case_id, uploader_id, file_name, storage_path):
         cursor = conn.cursor()
         cursor.execute("PRAGMA foreign_keys = ON;")
 
-        sql = """
-        INSERT INTO Documents (doc_id, case_id, uploader_id, file_name, storage_path, uploaded_at)
+        # Generate table name based on case_id
+        suffix = ''.join(c for c in str(case_id) if c.isalnum() or c == '_')
+        if not suffix:
+            suffix = 'default'
+        table_name = f"Documents_{suffix}"
+
+        # Ensure the table exists using the imported function
+        create_documents_table(conn, case_id)
+
+        # Insert the document record
+        sql = f"""
+        INSERT INTO {table_name} (doc_id, case_id, uploader_id, file_name, storage_path, uploaded_at)
         VALUES (?, ?, ?, ?, ?, ?);
         """
         cursor.execute(sql, (doc_id, case_id, uploader_id, file_name, storage_path, uploaded_at_timestamp))
