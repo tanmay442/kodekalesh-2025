@@ -275,8 +275,27 @@ def download_document(doc_id):
     storage_path = document['storage_path']
     directory = os.path.dirname(storage_path)
     filename = os.path.basename(storage_path)
-    
+
     return send_from_directory(directory, filename, as_attachment=True, attachment_filename=document['file_name'])
+
+# === AI SUMMARY ROUTE ===
+
+@app.route('/api/case/<case_id>/summary', methods=['GET'])
+@login_required
+def get_case_summary(case_id):
+    user_id = session.get('user_id')
+    user_role = session.get('role')
+
+    if user_role not in ['judge', 'advocate']:
+        return jsonify({"error": "Only judges and advocates can generate case summaries"}), 403
+
+    from functions.ai.ai_func import generate_case_summary
+    summary = generate_case_summary(case_id, user_id)
+
+    if summary == "Access denied":
+        return jsonify({"error": "You do not have access to this case"}), 403
+
+    return jsonify({"summary": summary}), 200
 
 if __name__ == '__main__':
     if not os.path.exists(UPLOAD_FOLDER):

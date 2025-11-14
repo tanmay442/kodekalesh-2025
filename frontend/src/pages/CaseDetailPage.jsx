@@ -65,6 +65,8 @@ const CaseDetailPage = () => {
     const [caseDetails, setCaseDetails] = useState(null);
     const [documents, setDocuments] = useState([]);
     const [permissions, setPermissions] = useState([]);
+    const [summary, setSummary] = useState('');
+    const [summaryLoading, setSummaryLoading] = useState(false);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
@@ -146,6 +148,18 @@ const CaseDetailPage = () => {
             setAccessError(err.response?.data?.error || 'Failed to grant access.');
         }
     };
+
+    const handleGenerateSummary = async () => {
+        setSummaryLoading(true);
+        try {
+            const res = await axios.get(`/api/case/${caseId}/summary`);
+            setSummary(res.data.summary);
+        } catch (err) {
+            setSummary('Failed to generate summary.');
+        } finally {
+            setSummaryLoading(false);
+        }
+    };
     
     const canManage = user.role === 'judge' || permissions.find(p => p.user_id === user.user_id)?.access_level === 'sudo';
 
@@ -178,6 +192,19 @@ const CaseDetailPage = () => {
                         </ul>
                         {documents.length === 0 && <p>No documents uploaded.</p>}
                     </section>
+
+                    {(user.role === 'judge' || user.role === 'advocate') && (
+                        <section className="card">
+                            <h2>AI Summary</h2>
+                            {summary ? (
+                                <p>{summary}</p>
+                            ) : (
+                                <button onClick={handleGenerateSummary} disabled={summaryLoading}>
+                                    {summaryLoading ? 'Generating...' : 'Generate Summary'}
+                                </button>
+                            )}
+                        </section>
+                    )}
                 </div>
 
                 <div className="sidebar-content">
